@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>API</title>
 </head>
 <body>
 
@@ -23,22 +23,7 @@
 	  <tr>
 	     <button type="button" id="button"> 검색</button> 
 	  </tr>
-	     
-	  <tbody id="my-tbody"></tbody>
 	</table>
-  
-  
-  <!-- 
-  
-	<br> 현재 페이지 : 
-	<br><input type="text" id ="currentPage" value="1">
-	<br> 페이지 당 출력 결과 수  : 
-	<br><input type="text" id =countPerPage" value="1">
-	<br> 주소 검색어 :
-	<br><input type="text" id="keyword" value="강서구7길">
-	<br> <button type="button" id="button"> 검색</button> 
-	<input type="submit" onclick ="btnClick" valus="전송"> -->
-	
 	</form>
 
 	<br><br><br>
@@ -54,34 +39,38 @@
 	
 	document.getElementById("button").onclick = function(){
 		
-		 
 		var xhr = new XMLHttpRequest();
-		var html_data = new Object();
+		var html_data = new Object();	// html 입력내용을  json 으로 만들기
 
 		html_data.currentPage = document.getElementById("currentPage").value;
 		html_data.keyword = document.getElementById("keyword").value;
 		
-		xhr.onreadystatechange = function(){
-			
-			if (xhr.readyState === 4){ 
-				if (xhr.status === 200 || xhr.status === 201) {
+		
+		xhr.onreadystatechange = function(){	
+			if (xhr.readyState === 4){ 		// 4 == xhr.DONE
+				if (xhr.status === 200 || xhr.status === 201) {	 // 404 ,500 에러 없을 경우 실행
+					
 					console.log("xhr.readyState " +xhr.readyState +"\n\n" );
 					console.log(xhr.responseText+"\n==============\n");
-			}
+					
+					var input_data = document.getElement("api_data").value ; 
+					api(input_data); 
+					
+				}
 			}
 		}
 
 		xhr.open("POST" , "/four"); 
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.send(JSON.stringify(html_data)); // 데이터를 stringify해서 보냄
+		xhr.setRequestHeader('Content-Type', 'application/json');	// json 형태로 데이터를 보내기 위한 설정
+		xhr.send(JSON.stringify(html_data)); 						// 데이터를 stringify해서 보냄
 		
 	
 		function api(api_data) {
 			
-			var jsonStr =api_data; //servlet 에서 넘긴 string 값 넣어주기 
-			var jsonInfo = JSON.parse(jsonStr);
+			var jsonStr =api_data; 					//servlet 에서 넘긴 string 값 넣어주기 
+			var jsonInfo = JSON.parse(jsonStr);		//String 을 json 으로 변경
 		
-			for(var i in jsonInfo.juso) {
+			for(var i in jsonInfo.juso) {			// 검색한 량에 맞게 반복문 , 해당 값들을 테이블로 추출
 	      
 		        add_row(jsonInfo.persons[i].roadAddr, "전체 도로명주소" );
 		        add_row(jsonInfo.persons[i].roadAddrPart1 , "도로명주소(참고항목 제외)");
@@ -107,13 +96,13 @@
 		        add_row(jsonInfo.persons[i].lnbrMnnm , "지번본번(번지)");
 		        add_row(jsonInfo.persons[i].lnbrSlno,"지번부번(호) (부번이 없는 경우 0)");
 		        add_row(jsonInfo.persons[i].emdNo , "읍면동일련번호");
-	          
 	      }; 
 		
 	}
-	function add_row(str_juso, str) {
+		
+	function add_row(str_juso, str) {								// 테이블 아래 행 추가하는 함수 
 		    var my_tbody = document.getElementById('my-tbody'); 
-		    var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+		    var row = my_tbody.insertRow( my_tbody.rows.length ); 	// 하단에 추가
 		    var cell1 = row.insertCell(0);
 		    var cell2 = row.insertCell(1);
 		    cell1.innerHTML = str;

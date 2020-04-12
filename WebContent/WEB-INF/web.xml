@@ -23,7 +23,7 @@
 
 	<servlet-mapping> 
 		<servlet-name>four_action</servlet-name> 
-		<url-pattern>/four_action</url-pattern> 
+		<url-pattern>/four</url-pattern> 
 	</servlet-mapping>
 
 
