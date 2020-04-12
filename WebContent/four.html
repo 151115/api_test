@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form>
+	<table> 
+	  <tr>
+	    <td> 현재 페이지 : </td>
+	    <td><input type="text" id ="currentPage" value="1"></td>
+	 </tr>
+	  <tr>
+	    <td>  페이지 당 출력 결과 수  :  </td>
+	   	<td><input type="text" id =countPerPage" value="1"></td>
+	  </tr>
+	  <tr>
+	    <td> 주소 검색어 :</td>
+	    <td><input type="text" id="keyword" value="강서구7길"></td>
+	  </tr>
+	  <tr>
+	     <button type="button" id="button"> 검색</button> 
+	  </tr>
+	     
+	  <tbody id="my-tbody"></tbody>
+	</table>
+  
+  
+  <!-- 
+  
+	<br> 현재 페이지 : 
+	<br><input type="text" id ="currentPage" value="1">
+	<br> 페이지 당 출력 결과 수  : 
+	<br><input type="text" id =countPerPage" value="1">
+	<br> 주소 검색어 :
+	<br><input type="text" id="keyword" value="강서구7길">
+	<br> <button type="button" id="button"> 검색</button> 
+	<input type="submit" onclick ="btnClick" valus="전송"> -->
+	
+	</form>
+
+	<br><br><br>
+	<table>
+	  <thead>
+	    <th>설명</th>
+	    <th>조회내용</th>
+	  </thead>
+	  <tbody id="my-tbody"></tbody>
+	</table>
+  
+	<script type="text/javascript">
+	
+	document.getElementById("button").onclick = function(){
+		
+		 
+		var xhr = new XMLHttpRequest();
+		var html_data = new Object();
+
+		html_data.currentPage = document.getElementById("currentPage").value;
+		html_data.keyword = document.getElementById("keyword").value;
+		
+		xhr.onreadystatechange = function(){
+			
+			if (xhr.readyState === 4){ 
+				if (xhr.status === 200 || xhr.status === 201) {
+					console.log("xhr.readyState " +xhr.readyState +"\n\n" );
+					console.log(xhr.responseText+"\n==============\n");
+			}
+			}
+		}
+
+		xhr.open("POST" , "/four"); 
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(JSON.stringify(html_data)); // 데이터를 stringify해서 보냄
+		
+	
+		function api(api_data) {
+			
+			var jsonStr =api_data; //servlet 에서 넘긴 string 값 넣어주기 
+			var jsonInfo = JSON.parse(jsonStr);
+		
+			for(var i in jsonInfo.juso) {
+	      
+		        add_row(jsonInfo.persons[i].roadAddr, "전체 도로명주소" );
+		        add_row(jsonInfo.persons[i].roadAddrPart1 , "도로명주소(참고항목 제외)");
+		        add_row(jsonInfo.persons[i].roadAddrPart2 , "도로명주소 참고항목");
+		        add_row(jsonInfo.persons[i].jibunAddr, "지번 정보");
+		        add_row(jsonInfo.persons[i].engAddr ,"도로명주소(영문)");
+		        add_row(jsonInfo.persons[i].zipNo ,"우편번호");
+		        add_row(jsonInfo.persons[i].admCd , "행정구역코드");
+		        add_row(jsonInfo.persons[i].rnMgtSn ,"도로명코드");
+		        add_row(jsonInfo.persons[i].bdMgtSn,"건물관리번호");
+		        add_row(jsonInfo.persons[i].detBdNmList,"상세건물명");
+		        add_row(jsonInfo.persons[i].bdNm , "건물명");
+		        add_row(jsonInfo.persons[i].bdKdcd, "공동주택여부 (1:공동주택, 0: 비공동주택)");
+		        add_row(jsonInfo.persons[i].siNm , "시도명");
+		        add_row(jsonInfo.persons[i].sggNm, "시군구명");
+		        add_row(jsonInfo.persons[i].emdNm,"읍면동명");
+		        add_row(jsonInfo.persons[i].liNm ,"법정리명");
+		        add_row(jsonInfo.persons[i].Rn, "도로명");
+		        add_row(jsonInfo.persons[i].udrtYn, "지하여부 (0:지상, 1:지하)");
+		        add_row(jsonInfo.persons[i].buldMnnm ,"건물본번");
+		        add_row(jsonInfo.persons[i].buldSlno , "건물부번 (부번이 없는 경우 0)");
+		        add_row(jsonInfo.persons[i].mtYn , "산여부 (0:대지, 1:산)");
+		        add_row(jsonInfo.persons[i].lnbrMnnm , "지번본번(번지)");
+		        add_row(jsonInfo.persons[i].lnbrSlno,"지번부번(호) (부번이 없는 경우 0)");
+		        add_row(jsonInfo.persons[i].emdNo , "읍면동일련번호");
+	          
+	      }; 
+		
+	}
+	function add_row(str_juso, str) {
+		    var my_tbody = document.getElementById('my-tbody'); 
+		    var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+		    var cell1 = row.insertCell(0);
+		    var cell2 = row.insertCell(1);
+		    cell1.innerHTML = str;
+		    cell2.innerHTML = str_juso;
+	  }
+
+	</script>
+</body>
+</html>
