@@ -46,7 +46,7 @@ public class four_action extends HttpServlet{
 		String countPerPage = "1";
 		String keyword = "강서구7길"; 
 		
-        String html_jsonData = request.getParameter("html_jsonData");
+        String html_jsonData = request.getParameter()
          
 		System.out.println("currentPage >> "+ currentPage +"\n");  
 
@@ -61,7 +61,7 @@ public class four_action extends HttpServlet{
 //				+"&countPerPage="+countPerPage+"&keyword="+keyword+
 //				"&confmKey="+confmKey+"&resultType="+resultType;
 		
-		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=1&keyword=강서구7길&confmKey=U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=&resultType=json";
+		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=3&keyword=강서구7길&confmKey=U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=&resultType=json";
 		
 		
 		URL url = new URL(api_url);
