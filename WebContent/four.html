@@ -10,25 +10,19 @@
 
 
 
-	<form id="form_data" method="POST">
-		
-			현재 페이지 :
-			<input type="text" id="currentPage" value="1">
-			<Br>
-			페이지 당 출력 결과 수 :
-			<input type="text" id="countPerPage" value="1">
-			<Br>
-			주소 검색어 :
-			<input type="text" id="keyword" value="강서구7길">
-			<Br>
-			<Br>
-			<button type="button" id="button">검색</button>
-			
+<!-- 	<form id="form_data" method="POST">
+
+		현재 페이지 : <input type="text" id="currentPage" value="1"> <Br>
+		페이지 당 출력 결과 수 : <input type="text" id="countPerPage" value="1">
+		<Br> 주소 검색어 : <input type="text" id="keyword" value="강서구7길">
+		<Br> <Br>
+		<button type="button" id="button">검색</button>
+
 	</form>
+ -->
 
 
-
-<!-- 	<form id="form_data">
+ 	<form id="form_data">
 		<table>
 			<tr>
 				<td>현재 페이지 :</td>
@@ -42,17 +36,19 @@
 				<td>주소 검색어 :</td>
 				<td><input type="text" id="keyword" value="강서구7길"></td>
 			</tr>
+			<tr> 
+			</tr>
 			<tr>
-				<button type="button" id="button">검색</button>
+				<td></td>
+				<td><button type="button" id="button">검색</button></td>
 			</tr>
 		</table>
-	</form> -->
-
-	<br>
+	</form> 
+ 
 	<br>
 	<br>
 	<table border="1" bordercolor="green">
-		<thead >
+		<thead>
 			<th>설명</th>
 			<th>조회내용</th>
 		</thead>
@@ -60,20 +56,18 @@
 	</table>
 
 	<script type="text/javascript">
-	
-////////////////////////////////////////////////////////////////////////////////////////////////////
-		var api = function(api_data) {
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		function api(api_data) {
 
-			console.log("api_data" +api_data );
-			
-			var jsonStr = api_data.substring(0,(api_data.length)-4); //servlet 에서 넘긴 string 값 넣어주기 
-			console.log("jsonStr  >> " +jsonStr );
+			console.log("api_data" + api_data);
+
+			var jsonStr = api_data.substring(0, (api_data.length) - 4); //servlet 에서 넘긴 string 값 넣어주기 
+			console.log("jsonStr  >> " + jsonStr);
 			var jsonInfo = JSON.parse(jsonStr); //String 을 json 으로 변경
 
+			console.log("jsonInfo" + jsonInfo);
 
-			console.log("jsonInfo" +jsonInfo );
-			 
-			for (var i=0; i<jsonInfo.results.juso.length; i++) { // 검색한 량에 맞게 반복문 , 해당 값들을 테이블로 추출
+			for (var i = 0; i < jsonInfo.results.juso.length; i++) { // 검색한 량에 맞게 반복문 , 해당 값들을 테이블로 추출
 
 				add_row(jsonInfo.results.juso[i].roadAddr, "전체 도로명주소");
 				add_row(jsonInfo.results.juso[i].roadAddrPart1, "도로명주소(참고항목 제외)");
@@ -103,42 +97,81 @@
 			;
 
 		}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-		var add_row = function(str_juso, str) { 					// 테이블 아래 행 추가하는 함수 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		function add_row(str_juso, str) { // 테이블 아래 행 추가하는 함수 
 			var my_tbody = document.getElementById('my-tbody');
-			var row = my_tbody.insertRow(my_tbody.rows.length); 	// 하단에 추가
+			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			cell1.innerHTML = str;
 			cell2.innerHTML = str_juso;
 		}
-		
-		
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+/* 
+		
+		var html_data = function(){
+
+			var xhr = new XMLHttpRequest(); 
+			var formdata = new FormData();
+			var ob_data = new Object();
+
+			ob_data.currentPage = document.getElementById('currentPage').value;
+			ob_data.countPerPage = document.getElementById('countPerPage').value;
+			ob_data.keyword = document.getElementById('keyword').value; 
+			
+			
+			console.log("ob_data > " + JSON.stringify(ob_data));
+			
+			console.log("document.getElementById('currentPage').value > "+document.getElementById('currentPage').value);
+			
+			
+			formdata.append("currentPage", (document.getElementById('currentPage').value));
+			formdata.append("countPerPage", (document.getElementById('countPerPage').value));
+			formdata.append("keyword", (document.getElementById('keyword').value));
+		
+
+			xhr.open("POST", "/test_java_2/four");
+
+			console.log("formdata > " + JSON.stringify(formdata));
+			xhr.send(formdata);
+
+			
+			////
+			var formElement = document.getElementById("form_data");
+
+			xhr.open("POST", "/test_java_2/four");
+
+			console.log("formElement > " + JSON.stringify(formElement));
+			//console.log("formElement.getFormData() > " + formElement.getFormData());
+			
+			
+			//xhr.send(formElement.getFormData());
+			
+			/* 
+			var form_data = document.getElementById("form_data"); 
+			var formData = new FormData(form_data); 
+
+			console.log("form_data >>" + JSON.stringify(form_data)); 
+			console.log("formData >>" + JSON.stringify(formData)); 
+			
+			xhr.open("POST" , "/test_java_2/four" , true); 
+			xhr.send(formData);
+			 */  
+			 
+			/* 
+			참고 url : https://unikys.tistory.com/233
+			참고 url : 
+				http://hacks.mozilla.or.kr/2010/05/firefox-4-formdata%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC-js%EB%A1%9C-%EB%B3%B4%EB%8B%A4-%EC%89%BD%EA%B2%8C-%ED%8F%BC-%EB%8B%A4%EB%A3%A8%EA%B8%B0/	
+		 */		
+			
+		} */
+		
 		document.getElementById("button").onclick = function() {
 
-			var xhr = new XMLHttpRequest();
-
-			/* 
-			var html_data = new Object(); // html 입력내용을  json 으로 만들기
-
-			var data_List = new Array();
-			var html_data = new Object(); 
-
-			html_data.currentPage = document.getElementById('currentPage').value;
-			html_data.countPerPage = document.getElementById('countPerPage').value;
-			html_data.keyword = document.getElementById('keyword').value; 
-			
-			data_List.push(html_data); 											// 리스트에 생성된 객체 삽입
-			var html_jsonData = JSON.stringify(data_List);						// String 형태로 변환 
-		 
- */
-		    
-		    
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState === 4) { // 4 == xhr.DONE
-					if (xhr.status === 200 || xhr.status === 201) { 			// 404 ,500 에러 없을 경우 실행
+					if (xhr.status === 200 || xhr.status === 201) { // 404 ,500 에러 없을 경우 실행
 
 						var servlet_data = xhr.responseText;
 
@@ -151,23 +184,27 @@
 					}
 				}
 			}
- 
+			
 
+			var xhr = new XMLHttpRequest(); 
+			var data_List = new Array();
+			var html_data = new Object(); 
+			
+			html_data.currentPage = document.getElementById('currentPage').value;
+			html_data.countPerPage = document.getElementById('countPerPage').value;
+			html_data.keyword = document.getElementById('keyword').value; 
+			
+			data_List.push(html_data); 											// 리스트에 생성된 객체 삽입
+			var html_jsonData = JSON.stringify(data_List);						// String 형태로 변환 
 		    
-		  	var form_data = document.getElementById("form_data"); 
-		    var formData = new FormData(form_data); 
-
-		    console.log("form_data >>" + JSON.stringify(form_data)); 
-		    console.log("formData >>" + JSON.stringify(formData)); 
+			  
+		    console.log("html_jsonData >>" + JSON.stringify(html_jsonData)); 
 		    
 			xhr.open("POST" , "/test_java_2/four" , true); 
-		    xhr.send(formData);
- 
-			// 참고 url : https://unikys.tistory.com/233
+		    xhr.send(html_jsonData);
 			
-		      
-			
-}		
+
+		}
 	</script>
 </body>
 </html>

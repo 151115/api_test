@@ -33,7 +33,7 @@ public class four_action extends HttpServlet{
 		response.setCharacterEncoding("UTF-8"); 
         request.setCharacterEncoding("UTF-8");
         Logger log= Logger.getLogger(four_action.class.getName()); 
-        PropertyConfigurator.configure("log.properties");
+        //PropertyConfigurator.configure("log.properties");
 
         // 자바스크립트에서 JSON 으로 보낸 값 사용방법 모름
          
@@ -46,11 +46,11 @@ public class four_action extends HttpServlet{
 		String countPerPage = "1";
 		String keyword = "강서구7길"; 
 		
-        String formData = request.getParameter("formData");
+        String html_jsonData = request.getParameter("html_jsonData");
          
 		System.out.println("currentPage >> "+ currentPage +"\n");  
 
-		System.out.println("====formData >> "+ formData +"\n\n\n\n"); 
+		System.out.println("====html_jsonData >> "+ html_jsonData +"\n\n\n\n"); 
 		
 		String confmKey  = "U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=";
 		String resultType = "json";
