@@ -10,7 +10,7 @@
 
 
 
-	<form id="form_data">
+	<form id="form_data" method="POST">
 		
 			현재 페이지 :
 			<input type="text" id="currentPage" value="1">
@@ -119,6 +119,8 @@
 		document.getElementById("button").onclick = function() {
 
 			var xhr = new XMLHttpRequest();
+
+			/* 
 			var html_data = new Object(); // html 입력내용을  json 으로 만들기
 
 			var data_List = new Array();
@@ -131,7 +133,7 @@
 			data_List.push(html_data); 											// 리스트에 생성된 객체 삽입
 			var html_jsonData = JSON.stringify(data_List);						// String 형태로 변환 
 		 
-
+ */
 		    
 		    
 			xhr.onreadystatechange = function() {
@@ -152,39 +154,18 @@
  
 
 		    
-		  	var form = document.getElementById("form_data"); 
-		    var formData = new FormData(form); 
-		    console.log("form >>" + JSON.stringify(form));
+		  	var form_data = document.getElementById("form_data"); 
+		    var formData = new FormData(form_data); 
+
+		    console.log("form_data >>" + JSON.stringify(form_data)); 
 		    console.log("formData >>" + JSON.stringify(formData)); 
 		    
 			xhr.open("POST" , "/test_java_2/four" , true); 
 		    xhr.send(formData);
  
-		    
-		     
-		    
-/* 
-		    var form = document.getElementById("form_data");      
-		    var file = form.files[0];
- 
-		    var formData = new FormData();
-
-		    formData.append("form_data" , file); 
-		    
-		    xhr.open("POST" , "/test_java_2/four" , true); 
-		    xhr.send(formData);
-
- *//* 
- 
-			xhr.open("POST", "/test_java_2/four");
-			xhr.setRequestHeader('Content-Type', 'application/json'); // json 형태로 데이터를 보내기 위한 설정
-			xhr.send(html_jsonData); // 데이터를 stringify해서 보냄 
-
+			// 참고 url : https://unikys.tistory.com/233
 			
-			console.log("formData" + JSON.stringify(formData))
-			xhr.send(formData);
-			
-			 */
+		      
 			
 }		
 	</script>
