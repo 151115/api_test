@@ -26,21 +26,24 @@
 		<table>
 			<tr>
 				<td>현재 페이지 :</td>
-				<td><input type="text" id="currentPage" value="1"></td>
+				<td><input type="text" id="currentPage" value="1" class="del"></td>
 			</tr>
 			<tr>
 				<td>페이지 당 출력 결과 수 :</td>
-				<td><input type="text" id="countPerPage" value="1"></td>
+				<td><input type="text" id="countPerPage" value="1" class="del"></td>
 			</tr>
 			<tr>
 				<td>주소 검색어 :</td>
-				<td><input type="text" id="keyword" value="강서구7길"></td>
+				<td><input type="text" id="keyword" value="강서구7길" class="del"></td>
 			</tr>
 			<tr> 
 			</tr>
 			<tr>
 				<td></td>
-				<td><button type="button" id="button">검색</button></td>
+				<td>
+				<button type="button" id="button">검색</button>
+				<button type="button" id="btn_delete">초기화</button>
+				</td>
 			</tr>
 		</table>
 	</form> 
@@ -48,29 +51,43 @@
 	<br>
 	<br>
 	<table border="1" bordercolor="green">
-		<thead>
-			
+		<thead> 
 			<th>설명</th>
 			<th>조회내용</th>
 		</thead>
 		<tbody id="my-tbody"></tbody>
 	</table>
+	
+	
+	
+	
 
 	<script type="text/javascript">
-		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		 // [ 테이블 초기화  ]
+		function table_del() { 
+
+			var btn = document.getElementsByClassName('my-tbody'); 
+
+			console.log(btn);
+			for(var i=0; i<btn.length; i++){
+				btn[i].value = '';
+			}
+ 
+		}
 		
-		
+		// [ api 결과값 출력 ]
 		function api(api_data) {
 
-			console.log("api_data" + api_data);
-
-			var jsonStr = api_data.substring(0, (api_data.length) - 4); //servlet 에서 넘긴 string 값 넣어주기 
+			var jsonStr = api_data.substring(0, (api_data.length) - 4); 	//servlet 에서 넘긴 string 값 넣어주기 
+			var jsonInfo = JSON.parse(jsonStr); 							//String 을 json 으로 변경
+			
 			console.log("jsonStr  >> " + jsonStr);
-			var jsonInfo = JSON.parse(jsonStr); //String 을 json 으로 변경
-
 			console.log("jsonInfo" + jsonInfo);
-
-			for (var i = 0; i < jsonInfo.results.juso.length; i++) { // 검색한 량에 맞게 반복문 , 해당 값들을 테이블로 추출
+			table_del();
+			
+			// 검색한 량에 맞게 반복문 , 해당 값들을 테이블로 추출
+			for (var i = 0; i < jsonInfo.results.juso.length; i++) { 
 
 				add_row(i+1+"번째 조회 값", i+1);
 				add_row(jsonInfo.results.juso[i].roadAddr, "전체 도로명주소");
@@ -98,13 +115,15 @@
 				add_row(jsonInfo.results.juso[i].lnbrSlno, "지번부번(호) (부번이 없는 경우 0)");
 				add_row(jsonInfo.results.juso[i].emdNo, "읍면동일련번호");
 				
-			}
-			;
+			} ;
 
 		}
 		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		function add_row(str_juso, str) { // 테이블 아래 행 추가하는 함수 
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////		
+		// [ 테이블 추가 함수 ]
+		function add_row(str_juso, str) { 						
 			var my_tbody = document.getElementById('my-tbody');
 			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
 			var cell1 = row.insertCell(0);
@@ -113,46 +132,28 @@
 			cell2.innerHTML = str_juso;
 		}
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-
 		
-		
+		////////////////////////////////////////////////////////////////////////////////////////////////////		
+		// [ 검색하기 버튼 ] 
 		document.getElementById("button").onclick = function() {
+			 
 			
+			// 값 입력 안하면 알림 창 띄우고싷다 
 			
-
 			var xhr = new XMLHttpRequest(); 
 
 			xhr.onreadystatechange = function() {
-				if (xhr.readyState === 4) { // 4 == xhr.DONE
-					if (xhr.status === 200 || xhr.status === 201) { // 404 ,500 에러 없을 경우 실행
+				if (xhr.readyState === 4) { 							// 4 == xhr.DONE
+					if (xhr.status === 200 || xhr.status === 201) { 	// 404 ,500 에러 없을 경우 실행
 
 						var servlet_data = xhr.responseText;
-
 						console.log("servlet_data >> " + servlet_data);
 						api(servlet_data);
-
-						console.log("xhr.readyState " + xhr.readyState + "\n\n");
-						console.log(xhr.responseText + "\n==============\n");
 
 					}
 				}
 			}
-			/* 
-			
-			var html_data = new Object();  
-			var data_List = new Array();
-			
-			
-			html_data.currentPage = document.getElementById('currentPage').value;
-			html_data.countPerPage = document.getElementById('countPerPage').value;
-			html_data.keyword = document.getElementById('keyword').value; 
-			 */
 
-
-			var html_data = new Object();  
-			var data_List = new Array();
-			
 			
 			var html_currentPage = document.getElementById('currentPage').value;
 			var html_countPerPage = document.getElementById('countPerPage').value;
@@ -163,9 +164,7 @@
 			  
 			
 			xhr.open("GET" ,query , true); 
-		    xhr.send(null);
-			
-
+		    xhr.send(null); 
 		}
 	</script>
 </body>
