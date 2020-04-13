@@ -37,31 +37,33 @@ public class four_action extends HttpServlet{
 
         // 자바스크립트에서 JSON 으로 보낸 값 사용방법 모름
          
-//		String currentPage = request.getParameter("currentPage"); 
-//		String countPerPage = request.getParameter("countPerPage");
-//		String keyword = request.getParameter("keyword"); 
+		String currentPage = request.getParameter("currentPage"); 
+		String countPerPage = request.getParameter("countPerPage");
+		String keyword = request.getParameter("keyword"); 
         
         
-        String currentPage = "1";
-		String countPerPage = "1";
-		String keyword = "강서구7길"; 
-		
-        String html_jsonData = request.getParameter()
+//        String currentPage = "1";
+//		String countPerPage = "1";
+//		String keyword = "강서구7길"; 
+		 
          
-		System.out.println("currentPage >> "+ currentPage +"\n");  
+		System.out.println("currentPage >> "+ currentPage +"\n");   
+		System.out.println("====countPerPage >> "+ countPerPage ); 
 
-		System.out.println("====html_jsonData >> "+ html_jsonData +"\n\n\n\n"); 
+		//System.out.println("====keyword >> "+ keyword ); 
+		
+		System.out.println("====keyword >> "+ keyword +"\n\n\n\n"); 
 		
 		String confmKey  = "U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=";
 		String resultType = "json";
 		
 		log.debug("currentPage >>"+currentPage);
 		 
-//		String api_url = "http://www.juso.go.kr/addrlink/asddrLinkApi.do?currentPage="+currentPage
-//				+"&countPerPage="+countPerPage+"&keyword="+keyword+
-//				"&confmKey="+confmKey+"&resultType="+resultType;
+		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage
+				+"&countPerPage="+countPerPage+"&keyword="+keyword+
+				"&confmKey="+confmKey+"&resultType="+resultType;
 		
-		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=3&keyword=강서구7길&confmKey=U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=&resultType=json";
+//		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=3&keyword=강서구7길&confmKey=U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=&resultType=json";
 		
 		
 		URL url = new URL(api_url);

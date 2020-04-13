@@ -138,6 +138,7 @@
 					}
 				}
 			}
+			/* 
 			
 			var html_data = new Object();  
 			var data_List = new Array();
@@ -146,19 +147,23 @@
 			html_data.currentPage = document.getElementById('currentPage').value;
 			html_data.countPerPage = document.getElementById('countPerPage').value;
 			html_data.keyword = document.getElementById('keyword').value; 
-			
+			 */
 
-		    console.log("html_jsonData >>" + JSON.stringify(html_data)); 
-		    
-		    
-			data_List.push(html_data); 											// 리스트에 생성된 객체 삽입
-			var html_jsonData = JSON.stringify(data_List);						// String 형태로 변환 
+
+			var html_data = new Object();  
+			var data_List = new Array();
 			
-		    console.log("data_List >>" + JSON.stringify(data_List));  
-		    console.log("html_jsonData >>" + html_jsonData); 
-		    
-			xhr.open("POST" , "/test_java_2/four" , true); 
-		    xhr.send(html_jsonData);
+			
+			var html_currentPage = document.getElementById('currentPage').value;
+			var html_countPerPage = document.getElementById('countPerPage').value;
+			var html_keyword = document.getElementById('keyword').value; 
+			
+			var query ="";
+			query = "/test_java_2/four?currentPage="+html_currentPage+"&countPerPage="+html_countPerPage+"&keyword="+html_keyword;
+			  
+			
+			xhr.open("GET" ,query , true); 
+		    xhr.send(null);
 			
 
 		}
