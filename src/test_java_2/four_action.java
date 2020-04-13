@@ -41,18 +41,14 @@ public class four_action extends HttpServlet{
 		String countPerPage = request.getParameter("countPerPage");
 		String keyword = request.getParameter("keyword"); 
         
-        
-//        String currentPage = "1";
-//		String countPerPage = "1";
-//		String keyword = "강서구7길"; 
-		 
-         
-		System.out.println("currentPage >> "+ currentPage +"\n");   
-		System.out.println("====countPerPage >> "+ countPerPage ); 
+		
+		
+		log.debug("currentPage >> "+ currentPage +"\n");   
+		log.debug("====countPerPage >> "+ countPerPage ); 
 
 		//System.out.println("====keyword >> "+ keyword ); 
 		
-		System.out.println("====keyword >> "+ keyword +"\n\n\n\n"); 
+		log.debug("====keyword >> "+ keyword +"\n\n\n\n"); 
 		
 		String confmKey  = "U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=";
 		String resultType = "json";
@@ -62,10 +58,7 @@ public class four_action extends HttpServlet{
 		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage
 				+"&countPerPage="+countPerPage+"&keyword="+keyword+
 				"&confmKey="+confmKey+"&resultType="+resultType;
-		
-//		String api_url = "http://www.juso.go.kr/addrlink/addrLinkApi.do?currentPage=1&countPerPage=3&keyword=강서구7길&confmKey=U01TX0FVVEgyMDIwMDMyNjAxNTMxNjEwOTU4NTc=&resultType=json";
-		
-		
+	 
 		URL url = new URL(api_url);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));	
@@ -90,7 +83,7 @@ public class four_action extends HttpServlet{
 		bw.close(); 
 		response.setContentType("text/xml");
 		response.getWriter().write(sb.toString()); 
-		 
+		
 	}
 	
 	

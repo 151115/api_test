@@ -7,42 +7,27 @@
 <title>API</title>
 </head>
 <body>
-
-
-
-<!-- 	<form id="form_data" method="POST">
-
-		현재 페이지 : <input type="text" id="currentPage" value="1"> <Br>
-		페이지 당 출력 결과 수 : <input type="text" id="countPerPage" value="1">
-		<Br> 주소 검색어 : <input type="text" id="keyword" value="강서구7길">
-		<Br> <Br>
-		<button type="button" id="button">검색</button>
-
-	</form>
- -->
-
-
+ 
  	<form id="form_data">
 		<table>
 			<tr>
-				<td>현재 페이지 :</td>
-				<td><input type="text" id="currentPage" value="1" class="del"></td>
+				<td>현재 페이지 :&nbsp&nbsp&nbsp</td>
+				<td><input type="text" id="currentPage" class="del"></td>
 			</tr>
 			<tr>
-				<td>페이지 당 출력 결과 수 :</td>
-				<td><input type="text" id="countPerPage" value="1" class="del"></td>
+				<td>출력 수 :</td>
+				<td><input type="text" id="countPerPage" class="del"></td>
 			</tr>
 			<tr>
 				<td>주소 검색어 :</td>
-				<td><input type="text" id="keyword" value="강서구7길" class="del"></td>
+				<td><input type="text" id="keyword" class="del"></td>
 			</tr>
 			<tr> 
 			</tr>
 			<tr>
 				<td></td>
-				<td>
+				<td>&nbsp&nbsp&nbsp
 				<button type="button" id="button">검색</button>
-				<button type="button" id="btn_delete">초기화</button>
 				</td>
 			</tr>
 		</table>
@@ -59,33 +44,16 @@
 	</table>
 	
 	
-	
-	
 
 	<script type="text/javascript">
 
-		 // [ 테이블 초기화  ]
-		function table_del() { 
-
-			var btn = document.getElementsByClassName('my-tbody'); 
-
-			console.log(btn);
-			for(var i=0; i<btn.length; i++){
-				btn[i].value = '';
-			}
- 
-		}
-		
 		// [ api 결과값 출력 ]
 		function api(api_data) {
-
 			var jsonStr = api_data.substring(0, (api_data.length) - 4); 	//servlet 에서 넘긴 string 값 넣어주기 
 			var jsonInfo = JSON.parse(jsonStr); 							//String 을 json 으로 변경
 			
 			console.log("jsonStr  >> " + jsonStr);
 			console.log("jsonInfo" + jsonInfo);
-			table_del();
-			
 			// 검색한 량에 맞게 반복문 , 해당 값들을 테이블로 추출
 			for (var i = 0; i < jsonInfo.results.juso.length; i++) { 
 
@@ -149,7 +117,6 @@
 						var servlet_data = xhr.responseText;
 						console.log("servlet_data >> " + servlet_data);
 						api(servlet_data);
-
 					}
 				}
 			}
